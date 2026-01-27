@@ -1,0 +1,28 @@
+.hidden {
+  display: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* input[type="radio"] + label {
+} */
+input[type="radio"]:checked + label {
+  font-weight: bolder;
+}
+
+.question-container {
+  border: 2px solid black;
+}
+
+.correct {
+  font-weight: 1000;
+  color: green;
+  text-decoration: underline;
+}
+.wrong {
+  font-weight: 1000;
+  color: red;
+  text-decoration: line-through;
+}
