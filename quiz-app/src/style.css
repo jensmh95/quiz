@@ -18,11 +18,11 @@ input[type="radio"]:checked + label {
 
 .correct {
   font-weight: 1000;
-  color: green;
+  background-color: green;
   text-decoration: underline;
 }
 .wrong {
   font-weight: 1000;
-  color: red;
+  background-color: red;
   text-decoration: line-through;
 }

@@ -1,4 +1,5 @@
-import { trivia_categories, decodeHtml } from "./utilities.js";
+import { Paragraph, TextRun } from "docx";
+import { trivia_categories, decodeHtml, shuffle } from "./utilities.js";
 
 const startBtn = document.querySelector(".start-btn");
 const categories = document.querySelector(".categories");
@@ -23,11 +24,30 @@ function getNumberOfQuestions() {
   return numberOfQuestionsInput.value;
 }
 
+async function downloadQuiz(fileName, content) {
+  try {
+    const response = await fetch("http://localhost:3001/write-file", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fileName: fileName,
+        content: content,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error("Could not reach backend");
+    }
+    const text = await response.text();
+    console.log(text);
+  } catch (error) {
+    console.error("Error downloading quiz: ", error);
+  }
+}
+
 async function generateQuestions() {
   try {
     const category = getCategories();
     const numberOfQuestions = getNumberOfQuestions();
-
     const response = await fetch(
       `https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${category}`,
     );
@@ -36,8 +56,8 @@ async function generateQuestions() {
     }
     const data = await response.json();
     const results = data.results;
-    console.log("Res");
-    console.log(results);
+    await downloadQuiz("quiz.docx", results);
+
     for (let i = 0; i < results.length; i++) {
       const answer = {
         questionId: i + 1,
@@ -46,11 +66,6 @@ async function generateQuestions() {
       };
       answerArr.push(answer);
     }
-    // const answerArr = results.map((q, index) => ({
-    //   questionId: index + 1,
-    //   givenAnswer: "",
-    //   correctAnswer: decodeHtml(q.correct_answer),
-    // }));
     console.log(answerArr);
     return results;
   } catch (error) {
