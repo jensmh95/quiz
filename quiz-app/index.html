@@ -11,59 +11,68 @@
     <div class="navbar-container">
       <nav class="navbar">
         <ul class="nav-menu">
-          <li>
-            <a href="quiz.docx" download="">Download quiz</a>
+          <li class="download-quiz hidden">
+            <a href="src/quiz.docx" download="">Download quiz</a>
           </li>
         </ul>
       </nav>
     </div>
-    <div class="header-container">
+    <div class="header-container hidden">
       <h1 class="header">Welcome to my quiz app!</h1>
     </div>
-    <div class="categories-container">
-      <h2>Select a category!</h2>
-      <select class="categories">
-        <option value="General Knowledge">General Knowledge</option>
-        <option value="Books">Books</option>
-        <option value="Film">Film</option>
-        <option value="Music">Music</option>
-        <option value="Musicals & Theatres">Musicals & Theatres</option>
-        <option value="Television">Television</option>
-        <option value="Video Games">Video Games</option>
-        <option value="Board Games">Board Games</option>
-        <option value="Science & Nature">Science & Nature</option>
-        <option value="Computers">Computers</option>
-        <option value="Mathematics">Mathematics</option>
-        <option value="Mythology">Mythology</option>
-        <option value="Sports">Sports</option>
-        <option value="Geography">Geography</option>
-        <option value="History">History</option>
-        <option value="Politics">Politics</option>
-        <option value="Art">Art</option>
-        <option value="Celebrities">Celebrities</option>
-        <option value="Animals">Animals</option>
-        <option value="Vehicles">Vehicles</option>
-        <option value="Comics">Comics</option>
-        <option value="Gadgets">Gadgets</option>
-        <option value="Japanese Anime & Manga">Japanese Anime & Manga</option>
-        <option value="Cartoon & Animations">Cartoon & Animations</option>
-      </select>
-      <div class="number-of-questions-container">
-        <h2>How many questions?</h2>
-        <input
-          class="number-of-questions"
-          type="number"
-          min="1"
-          placeholder="1"
-          value="1"
-        />
-      </div>
-      <div class="start-btn-container">
-        <button class="start-btn">Kjør quiz</button>
+    <div class="main">
+      <div class="input-container">
+        <div class="categories-container">
+          <h2>Select a category!</h2>
+          <select class="categories">
+            <option value="General Knowledge">General Knowledge</option>
+            <option value="Books">Books</option>
+            <option value="Film">Film</option>
+            <option value="Music">Music</option>
+            <option value="Musicals & Theatres">Musicals & Theatres</option>
+            <option value="Television">Television</option>
+            <option value="Video Games">Video Games</option>
+            <option value="Board Games">Board Games</option>
+            <option value="Science & Nature">Science & Nature</option>
+            <option value="Computers">Computers</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Mythology">Mythology</option>
+            <option value="Sports">Sports</option>
+            <option value="Geography">Geography</option>
+            <option value="History">History</option>
+            <option value="Politics">Politics</option>
+            <option value="Art">Art</option>
+            <option value="Celebrities">Celebrities</option>
+            <option value="Animals">Animals</option>
+            <option value="Vehicles">Vehicles</option>
+            <option value="Comics">Comics</option>
+            <option value="Gadgets">Gadgets</option>
+            <option value="Japanese Anime & Manga">
+              Japanese Anime & Manga
+            </option>
+            <option value="Cartoon & Animations">Cartoon & Animations</option>
+          </select>
+          <div class="number-of-questions-container">
+            <h2>How many questions?</h2>
+            <input
+              class="number-of-questions"
+              type="number"
+              min="1"
+              placeholder="1"
+              value="1"
+            />
+          </div>
+        </div>
+        <div class="start-btn-container">
+          <button class="btn">Kjør quiz</button>
+        </div>
       </div>
     </div>
+    <div class="loading main hidden">
+      <h3>Loading quiz....</h3>
+    </div>
     <div class="quiz">
-      <form action="form_results.txt" method="POST" class="form">
+      <form action="form_results.txt" method="POST" class="form hidden">
         <!-- <div class="question-container">
             <h3>Which one of these is not a typical European sword design?</h3>
           </div>
@@ -77,8 +86,7 @@
             <input type="radio" name="q1" value="Scimitar"></input>
             <label for="Scimitar">Scimitar</label><br><br>
           </div>  -->
-        <input type="reset" />
-        <input type="submit" class="submit hidden" value="Submit" />
+        <input type="submit" class="submit btn hidden" value="Submit" />
       </form>
     </div>
     <script type="module" src="src/main.js"></script>
