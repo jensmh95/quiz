@@ -1,14 +1,17 @@
-import { Paragraph, TextRun } from "docx";
-import { trivia_categories, decodeHtml, shuffle } from "./utilities.js";
+import { trivia_categories, decodeHtml } from "./utilities.js";
 
-const startBtn = document.querySelector(".start-btn");
+const startBtn = document.querySelector(".btn");
 const categories = document.querySelector(".categories");
 const numberOfQuestionsInput = document.querySelector(".number-of-questions");
 const submitAnswersBtn = document.querySelector(".submit");
 const formElement = document.querySelector(".form");
+const mainContent = document.querySelector(".main");
+const loadingText = document.querySelector(".loading");
+const downloadQuizLiItem = document.querySelector(".download-quiz");
 
 const headerContainer = document.querySelector(".header-container");
 const categoriesContainer = document.querySelector(".categories-container");
+const inputContainer = document.querySelector(".input-container");
 
 const correct_answers = [];
 const answerArr = [];
@@ -96,6 +99,7 @@ submitAnswersBtn.addEventListener("click", function (e) {
     }
   }
   renderScore(score, correct_answers.length);
+  submitAnswersBtn.disabled = true;
 });
 
 function renderScore(score, numberOfQuestions) {
@@ -109,10 +113,12 @@ function renderScore(score, numberOfQuestions) {
 async function renderQuestions() {
   headerContainer.classList.add("hidden");
   categoriesContainer.classList.add("hidden");
-
+  inputContainer.classList.add("hidden");
+  mainContent.classList.add("hidden");
+  loadingText.classList.toggle("hidden");
+  downloadQuizLiItem.classList.toggle("hidden");
   const results = await generateQuestions();
 
-  //submitAnswersBtn.style.display = "block";
   let markup = ``;
   for (let i = 0; i < results.length; i++) {
     const questionType = results[i].type;
@@ -145,22 +151,45 @@ async function renderQuestions() {
         <legend class="question-container">
           <h3>${results[i].question}</h3>
         </legend>
+
+        <div class="option-item">
         <input type="radio" id="${alternativeOne}-${i}" name="q${
           i + 1
         }" value="${alternativeOne}">
-        <label for="${alternativeOne}-${i}">${alternativeOne}</label><br>
-        <input type="radio" id="${alternativeTwo}-${i}" name="q${
-          i + 1
-        }" value="${alternativeTwo}">
-        <label for="${alternativeTwo}-${i}">${alternativeTwo}</label><br>
-        <input type="radio" id="${alternativeThree}-${i}" name="q${
-          i + 1
-        }" value="${alternativeThree}">
-        <label for="${alternativeThree}-${i}">${alternativeThree}</label><br>
-        <input type="radio" id="${alternativeFour}-${i}" name="q${
-          i + 1
-        }" value="${alternativeFour}">
-                <label for="${alternativeFour}-${i}">${alternativeFour}</label><br><br>
+        <label  for="${alternativeOne}-${i}">
+          <span class="custom-radio"></span>  
+          ${alternativeOne}</label>
+        </div>
+
+        <div class="option-item">
+          <input type="radio" id="${alternativeTwo}-${i}" name="q${
+            i + 1
+          }" value="${alternativeTwo}">
+          <label for="${alternativeTwo}-${i}">
+            <span class="custom-radio"></span>
+            ${alternativeTwo}
+            </label>
+        </div>
+
+         <div class="option-item">
+          <input type="radio" id="${alternativeThree}-${i}" name="q${
+            i + 1
+          }" value="${alternativeThree}">
+          <label for="${alternativeThree}-${i}">
+          <span class="custom-radio"></span>
+          ${alternativeThree}
+          </label>
+        </div>
+        
+        <div class="option-item">
+          <input type="radio" id="${alternativeFour}-${i}" name="q${
+            i + 1
+          }" value="${alternativeFour}">
+            <label for="${alternativeFour}-${i}">
+            <span class="custom-radio"></span>
+            ${alternativeFour}
+          </label>
+        </div>
                 `;
     } else {
       const alternatives = [
@@ -181,17 +210,29 @@ async function renderQuestions() {
             <legend class="question-container">
             <h3>${results[i].question}</h3>
       </legend>
-      <input type="radio" id="${alternativeOne}-${i}" name="q${
-        i + 1
-      }" value="${alternativeOne}" required>
-        <label for="${alternativeOne}-${i}">${alternativeOne}</label><br>
-            <input type="radio" id="${alternativeTwo}-${i}" name="q${
-              i + 1
-            }" value="${alternativeTwo}">
-                <label for="${alternativeTwo}-${i}">${alternativeTwo}</label><br>
+
+      <div class="option-item">
+        <input type="radio" id="${alternativeOne}-${i}" name="q${
+          i + 1
+        }" value="${alternativeOne}" required>
+          <label class="option" for="${alternativeOne}-${i}">
+          <span class="custom-radio"></span>  
+          ${alternativeOne}</label>
+      </div>
+      
+      <div class="option-item">
+        <input type="radio" id="${alternativeTwo}-${i}" name="q${
+          i + 1
+        }" value="${alternativeTwo}">
+            <label class="option" for="${alternativeTwo}-${i}">
+            <span class="custom-radio"></span>
+          ${alternativeTwo}</label>
+      </div>
                     `;
     }
   }
   submitAnswersBtn.classList.toggle("hidden");
   formElement.insertAdjacentHTML("afterbegin", markup);
+  formElement.classList.toggle("hidden");
+  loadingText.classList.toggle("hidden");
 }

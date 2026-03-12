@@ -1,14 +1,7 @@
 import express from "express";
 import fs from "fs";
 import cors from "cors";
-import {
-  Document,
-  Packer,
-  Paragraph,
-  TextRun,
-  Header,
-  HeadingLevel,
-} from "docx";
+import { Document, Packer, Paragraph, TextRun, HeadingLevel } from "docx";
 import he from "he";
 const app = express();
 app.use(cors());
@@ -16,7 +9,6 @@ app.use(express.json());
 
 app.post("/write-file", (req, res) => {
   const { fileName, content } = req.body;
-  console.log("CONTENT");
   console.log(content);
 
   if (!fileName || !content) {
